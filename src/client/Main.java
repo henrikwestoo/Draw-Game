@@ -31,7 +31,10 @@ public class Main {
             ClientThread clientThread = new ClientThread(socket);
             //skapa gui
             Paper paper = new Paper(clientThread);
+            clientThread.paper = paper;
             ClientGUI gui = new ClientGUI(paper);
+            
+            clientThread.start();
 
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

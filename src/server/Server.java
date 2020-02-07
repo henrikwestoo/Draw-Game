@@ -8,6 +8,7 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,13 +18,15 @@ import java.util.logging.Logger;
  */
 public class Server {
 
+    static ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
+    static int clientCount;
+
     public static void main(String[] args) {
 
         ServerSocket serverSocket;
         Socket clientSocket;
         int port = 2000;
         boolean running = true;
-        int clientCount = 0;
 
         try {
             serverSocket = new ServerSocket(port);
@@ -33,14 +36,14 @@ public class Server {
                 clientSocket = serverSocket.accept();
                 clientCount++;
                 System.out.println("Connection request recieved");
-                
+
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
-                
+                clients.add(clientHandler);
+
                 System.out.println("ClientHandler created");
-                
+
                 Thread thread = new Thread(clientHandler);
                 thread.start();
-                
 
             }
 
@@ -50,9 +53,14 @@ public class Server {
 
     }
 
-    //ha en samling med clients
-    //ha en serversocket
-    //lyssna efter client sockets på serversocketen
-    //ta emot en client-socket
-    //skapa en serverthread med den socketen
+    static void broadcastData(String data) {
+
+        for (ClientHandler client : clients) {
+
+            client.sendMessage(data);
+
+        }
+
+    }
+    
 }

@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -17,6 +19,7 @@ import java.net.Socket;
 public class ClientThread extends Thread {
 
     Socket socket;
+    Paper paper;
 
     public ClientThread(Socket socket) {
 
@@ -29,14 +32,35 @@ public class ClientThread extends Thread {
 
         try {
 
-            String message = p.toString();
+            String pointString = ""+ p.x + "," + p.y +"";
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println(message);
+            out.println(pointString);
 
         } catch (IOException ex) {
             System.out.println("Could not send message");
         }
     }
+    
     //recievepoint()
+    @Override
+    public void run() {
+
+        try {
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            //Läser in alla meddelanden som skickas
+            while (true) {
+                String[] xy = in.readLine().split(",");
+                Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
+                paper.addPoint(p);
+                System.out.println(in.readLine());
+            }
+
+        } catch (Exception ex) {
+            System.out.println("Could not get messages");
+        }
+
+    }
 
 }

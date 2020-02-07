@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author Henrik
  */
 public class ClientHandler implements Runnable {
-    
+
     DataInputStream dis;
     DataOutputStream dos;
     Socket socket;
@@ -32,17 +32,14 @@ public class ClientHandler implements Runnable {
     public ClientHandler(Socket socket) {
 
         this.socket = socket;
-        
+
         try {
-            
+
             dis = new DataInputStream(socket.getInputStream());
             dos = new DataOutputStream(socket.getOutputStream());
             this.out = new PrintWriter(dos);
             ip = socket.getInetAddress().getHostName();
-        }
-        
-        catch (IOException ex) {
-
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
 
@@ -50,30 +47,32 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        
+
         int counter = 0;
-        
-        while(true){
+
+        while (running) {
 
             try {
                 in = new BufferedReader(new InputStreamReader(dis));
                 //det inkomna meddelandet
                 String message = in.readLine();
                 counter++;
-                System.out.println(message + counter);
+                Server.broadcastData(message);
             } catch (IOException ex) {
+
+                running = false;
+                System.out.println("Client disconnected");
                 System.out.println(ex.getMessage());
             }
-        
-        
+
         }
-        
+
     }
-    
-//    public void sendMessage(String message){
-//    
-//        out.println(message);
-//        out.flush();
-//    
-//    }
+
+    public void sendMessage(String message) {
+
+        out.println(message);
+        out.flush();
+
+    }
 }

@@ -39,7 +39,7 @@ public class Paper extends JPanel {
         try {
             while (i.hasNext()) {
                 Point p = (Point) i.next();
-                g.fillOval(p.x, p.y, 20, 20);
+                g.fillOval(p.x, p.y, 10, 10);
             }
         } catch (Exception e) {
         }
