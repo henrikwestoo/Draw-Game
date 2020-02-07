@@ -20,17 +20,21 @@ public class Server {
 
     static ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
     static int clientCount;
-
-    public static void main(String[] args) {
-
+    ServerGUI serverGUI;
+    int port;
+    boolean running;
+    
+    public void startServer(int port){
+        
         ServerSocket serverSocket;
         Socket clientSocket;
-        int port = 2000;
-        boolean running = true;
+        this.port = port;
+        running = true;
 
         try {
             serverSocket = new ServerSocket(port);
             System.out.println("Server started");
+            
             while (running) {
 
                 clientSocket = serverSocket.accept();
