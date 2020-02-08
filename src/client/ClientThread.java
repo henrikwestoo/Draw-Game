@@ -28,7 +28,7 @@ public class ClientThread extends Thread {
     }
 
     //send point
-    public void sendMessage(Point p) {
+    public void sendPoint(Point p) {
 
         try {
 

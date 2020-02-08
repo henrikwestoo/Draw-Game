@@ -6,6 +6,7 @@
 package client;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -27,6 +28,7 @@ public class Paper extends JPanel {
     public Paper(ClientThread clientThread) {
         this.clientThread = clientThread;
         setBackground(Color.white);
+        this.setSize(450, 400);
         addMouseListener(new L1());
         addMouseMotionListener(new L2());
     }
@@ -49,7 +51,7 @@ public class Paper extends JPanel {
     public void addPoint(Point p) {
         hs.add(p);
         repaint();
-        clientThread.sendMessage(p);
+        clientThread.sendPoint(p);
     }
 
     class L1 extends MouseAdapter {
