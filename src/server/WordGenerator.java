@@ -16,7 +16,7 @@ public class WordGenerator {
     public WordGenerator(){
     
        String simpleWord = "elefant";
-       String tag = "WORD-TAG";
+       String tag = "WORD-TAG$$";
        
        word = tag + simpleWord;
     

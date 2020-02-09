@@ -56,21 +56,32 @@ public class ClientHandler implements Runnable {
                 in = new BufferedReader(new InputStreamReader(dis));
                 //det inkomna meddelandet
                 String message = in.readLine();
-                
+
                 // if startswith tag
                 //check if correct
                 //if correct, send specific message
-                
-                if(message.startsWith("THETAG")){
-                
+                if (message.startsWith("GUESS$")) {
+
                     System.out.println("guess detected");
-                
-                }
-                
-                else{
+
+                    if (message.startsWith("GUESS$-CORRECT$$")) {
+
+                        //broadcast infomessage
+                        Server.broadcastData("METHOD$-CALL$-CORRECTANSWER$");
+                        System.out.println("A CORRECT GUESS WAS MADE!!!");
+
+                    } else if (message.startsWith("GUESS$-INCORRECT$$")) {
+
+                        //do nothing
+                        System.out.println("User gave an incorrect guess: " + message);
+
+                    }
+
+                } //det var en point som skickades
+                else {
                     System.out.println("wasnt guess");
-                counter++;
-                Server.broadcastData(message);
+                    counter++;
+                    Server.broadcastData(message);
                 }
             } catch (IOException ex) {
 

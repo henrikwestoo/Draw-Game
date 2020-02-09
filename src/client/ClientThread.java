@@ -21,6 +21,7 @@ public class ClientThread extends Thread {
     Socket socket;
     Paper paper;
     String currentCorrectAnswer;
+    ClientGUI gui;
 
     public ClientThread(Socket socket) {
 
@@ -47,7 +48,17 @@ public class ClientThread extends Thread {
 
         try {
 
-            String formattedGuess = "THETAG" + guess; 
+            String formattedGuess;
+            if (guess.equals(currentCorrectAnswer)) {
+
+                formattedGuess = "GUESS$-CORRECT$$" + guess;
+
+            } else {
+
+                formattedGuess = "GUESS$-INCORRECT$$" + guess;
+
+            }
+
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(formattedGuess);
 
@@ -65,24 +76,35 @@ public class ClientThread extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             //Läser in alla meddelanden som skickas
+            //GÖR OM TILL SWITCH
             while (true) {
                 String message = in.readLine();
-                
-                
-                if(message.startsWith("WORD-TAG")){
-                
+
+                if (message.startsWith("WORD-TAG")) {
+
                     System.out.println("correct answer recieved: " + message);
+                    String trimmedMessage = message.substring(message.lastIndexOf("$") + 1);
+                    currentCorrectAnswer = trimmedMessage;
+                    System.out.println("correct answer set as: " + trimmedMessage);
+
+                } 
                 
-                }
+                else if (message.equals("METHOD$-CALL$-CORRECTANSWER$")) 
+                {
+
+                    gui.setInfoText("A USER HAS GIVEN THE CORRECT ANSWER");
+                    System.out.println("a correct answer was given by a user");
+                    
+                } 
                 
-                else{
                 
-                
-                String[] xy = message.split(",");
-                Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
-                paper.addPoint(p);
-                System.out.println(in.readLine());
-                
+                else {
+
+                    String[] xy = message.split(",");
+                    Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
+                    paper.addPoint(p);
+                    System.out.println(in.readLine());
+
                 }
             }
 

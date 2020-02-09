@@ -68,7 +68,8 @@ public class Server {
             client.sendMessage(data);
 
         }
-
+        System.out.println("broadcasted: " +data);
+        
     }
     
 }

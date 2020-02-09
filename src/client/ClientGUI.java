@@ -16,7 +16,7 @@ public class ClientGUI extends javax.swing.JFrame {
     
     ClientThread clientThread;
     
-    public ClientGUI(Paper paper, ClientThread clientThread) {
+    public ClientGUI(Paper paper, ClientThread clientThread, String currentCorrectAnswer) {
         this.clientThread = clientThread;
         setVisible(true);
         initComponents();
@@ -24,6 +24,14 @@ public class ClientGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().add(paper, BorderLayout.CENTER);
         
+        correctAnswerHintLbl.setText(currentCorrectAnswer);
+        
+    }
+    
+    public void setInfoText(String text){
+    
+        infoLbl.setText(text);
+    
     }
 
     /**
@@ -35,16 +43,17 @@ public class ClientGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        correctAnswerHintLbl = new javax.swing.JLabel();
         messageTxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         messagesTxt = new javax.swing.JTextArea();
         sendMessageBtn = new javax.swing.JButton();
+        infoLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("_________");
+        correctAnswerHintLbl.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        correctAnswerHintLbl.setText("_________");
 
         messagesTxt.setColumns(20);
         messagesTxt.setRows(5);
@@ -57,6 +66,8 @@ public class ClientGUI extends javax.swing.JFrame {
             }
         });
 
+        infoLbl.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -68,18 +79,21 @@ public class ClientGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sendMessageBtn))
+                            .addComponent(sendMessageBtn)
+                            .addComponent(infoLbl))
                         .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(infoLbl)
+                .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -92,13 +106,14 @@ public class ClientGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendMessageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMessageBtnActionPerformed
-        String hej = messageTxt.getText();
+        
         clientThread.sendGuess(messageTxt.getText());
     }//GEN-LAST:event_sendMessageBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel correctAnswerHintLbl;
+    private javax.swing.JLabel infoLbl;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JTextArea messagesTxt;
