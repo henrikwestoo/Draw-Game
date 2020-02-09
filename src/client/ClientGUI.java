@@ -16,7 +16,7 @@ public class ClientGUI extends javax.swing.JFrame {
     
     ClientThread clientThread;
     
-    public ClientGUI(Paper paper, ClientThread clientThread, String currentCorrectAnswer) {
+    public ClientGUI(Paper paper, ClientThread clientThread) {
         this.clientThread = clientThread;
         setVisible(true);
         initComponents();
@@ -24,8 +24,12 @@ public class ClientGUI extends javax.swing.JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().add(paper, BorderLayout.CENTER);
         
-        correctAnswerHintLbl.setText(currentCorrectAnswer);
-        
+    }
+    
+    public void setAnswer(String answer){
+    
+        correctAnswerHintLbl.setText(answer);
+    
     }
     
     public void setInfoText(String text){

@@ -49,8 +49,7 @@ public class Server {
                 Thread thread = new Thread(clientHandler);
                 thread.start();
                 
-                WordGenerator wg = new WordGenerator();
-                broadcastData(wg.word);
+                broadcastNewWord();
                 
 
             }
@@ -59,6 +58,12 @@ public class Server {
             System.out.println(ex.getMessage());
         }
 
+    }
+    
+    static void broadcastNewWord(){
+    
+        broadcastData(WordGenerator.generateWord());
+    
     }
 
     static void broadcastData(String data) {

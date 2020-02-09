@@ -5,6 +5,9 @@
  */
 package server;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author Henrik
@@ -13,13 +16,20 @@ public class WordGenerator {
     
     public String word;
     
-    public WordGenerator(){
+    public static String generateWord(){
     
-       String simpleWord = "elefant";
-       String tag = "WORD-TAG$$";
-       
-       word = tag + simpleWord;
-    
+        ArrayList<String> words = new ArrayList<>();
+        
+        words.add("elefant");
+        words.add("lejon");
+        words.add("pizza");
+        words.add("lampa");
+        
+        Random r = new Random();
+        int index = r.nextInt(4);
+        String tag = "WORD-TAG$$";
+        
+        return tag + words.get(index);
     }
     
 }

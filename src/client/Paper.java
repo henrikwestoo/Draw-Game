@@ -48,23 +48,30 @@ public class Paper extends JPanel {
 
     }
 
-    public void addPoint(Point p) {
+    public void addAndSendPoint(Point p) {
         hs.add(p);
         repaint();
         clientThread.sendPoint(p);
     }
 
+    public void addPoint(Point p) {
+        hs.add(p);
+        repaint();
+    }
+
     class L1 extends MouseAdapter {
 
         public void mousePressed(MouseEvent me) {
-            addPoint(me.getPoint());
+            addAndSendPoint(me.getPoint());
+            System.out.println("MOUSEPRESSED PRINT");
         }
     }
 
     class L2 extends MouseMotionAdapter {
 
         public void mouseDragged(MouseEvent me) {
-            addPoint(me.getPoint());
+            addAndSendPoint(me.getPoint());
+            System.out.println("MOUSEDRAGGED PRINT");
         }
     }
 

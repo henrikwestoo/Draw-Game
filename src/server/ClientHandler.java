@@ -69,6 +69,8 @@ public class ClientHandler implements Runnable {
                         //broadcast infomessage
                         Server.broadcastData("METHOD$-CALL$-CORRECTANSWER$");
                         System.out.println("A CORRECT GUESS WAS MADE!!!");
+                        
+                        Server.broadcastNewWord();
 
                     } else if (message.startsWith("GUESS$-INCORRECT$$")) {
 

@@ -29,12 +29,14 @@ public class Main {
 
             //skapa klienttråd
             ClientThread clientThread = new ClientThread(socket);
-            clientThread.start();
+            
             //skapa gui
             Paper paper = new Paper(clientThread);
             clientThread.paper = paper;
-            ClientGUI gui = new ClientGUI(paper, clientThread, clientThread.currentCorrectAnswer);
+            ClientGUI gui = new ClientGUI(paper, clientThread);
             clientThread.gui = gui;
+            
+            clientThread.start();
             
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

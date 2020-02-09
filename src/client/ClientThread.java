@@ -85,6 +85,7 @@ public class ClientThread extends Thread {
                     System.out.println("correct answer recieved: " + message);
                     String trimmedMessage = message.substring(message.lastIndexOf("$") + 1);
                     currentCorrectAnswer = trimmedMessage;
+                    gui.setAnswer(trimmedMessage);
                     System.out.println("correct answer set as: " + trimmedMessage);
 
                 } 
@@ -108,8 +109,8 @@ public class ClientThread extends Thread {
                 }
             }
 
-        } catch (Exception ex) {
-            System.out.println("Could not get messages");
+        } catch (IOException | NumberFormatException ex) {
+            System.out.println("Could not get messages" + ex.getMessage());
         }
 
     }
