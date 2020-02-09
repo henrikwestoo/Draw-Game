@@ -48,6 +48,10 @@ public class Server {
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
+                
+                WordGenerator wg = new WordGenerator();
+                broadcastData(wg.word);
+                
 
             }
 

@@ -9,13 +9,17 @@ package server;
  *
  * @author Henrik
  */
-public class Main {
+public class WordGenerator {
     
-    public static void main(String[] args) {
+    public String word;
     
-        Server server = new Server();
-        ServerGUI serverGUI = new ServerGUI(server);
-        serverGUI.setVisible(true);
+    public WordGenerator(){
+    
+       String simpleWord = "elefant";
+       String tag = "WORD-TAG";
+       
+       word = tag + simpleWord;
+    
     }
     
 }

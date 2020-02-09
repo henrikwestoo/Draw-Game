@@ -14,7 +14,10 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class ClientGUI extends javax.swing.JFrame {
     
-    public ClientGUI(Paper paper) {
+    ClientThread clientThread;
+    
+    public ClientGUI(Paper paper, ClientThread clientThread) {
+        this.clientThread = clientThread;
         setVisible(true);
         initComponents();
         this.setVisible(true);
@@ -48,6 +51,11 @@ public class ClientGUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(messagesTxt);
 
         sendMessageBtn.setText("SEND");
+        sendMessageBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendMessageBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -82,6 +90,11 @@ public class ClientGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sendMessageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMessageBtnActionPerformed
+        String hej = messageTxt.getText();
+        clientThread.sendGuess(messageTxt.getText());
+    }//GEN-LAST:event_sendMessageBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

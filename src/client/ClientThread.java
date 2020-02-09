@@ -20,6 +20,7 @@ public class ClientThread extends Thread {
 
     Socket socket;
     Paper paper;
+    String currentCorrectAnswer;
 
     public ClientThread(Socket socket) {
 
@@ -32,7 +33,7 @@ public class ClientThread extends Thread {
 
         try {
 
-            String pointString = ""+ p.x + "," + p.y +"";
+            String pointString = "" + p.x + "," + p.y + "";
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(pointString);
 
@@ -40,7 +41,21 @@ public class ClientThread extends Thread {
             System.out.println("Could not send message");
         }
     }
-    
+
+    //send guess
+    public void sendGuess(String guess) {
+
+        try {
+
+            String formattedGuess = "THETAG" + guess; 
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            out.println(formattedGuess);
+
+        } catch (IOException ex) {
+            System.out.println("Could not send message");
+        }
+    }
+
     //recievepoint()
     @Override
     public void run() {
@@ -51,10 +66,24 @@ public class ClientThread extends Thread {
 
             //Läser in alla meddelanden som skickas
             while (true) {
-                String[] xy = in.readLine().split(",");
+                String message = in.readLine();
+                
+                
+                if(message.startsWith("WORD-TAG")){
+                
+                    System.out.println("correct answer recieved: " + message);
+                
+                }
+                
+                else{
+                
+                
+                String[] xy = message.split(",");
                 Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
                 paper.addPoint(p);
                 System.out.println(in.readLine());
+                
+                }
             }
 
         } catch (Exception ex) {

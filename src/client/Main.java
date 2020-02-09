@@ -32,7 +32,7 @@ public class Main {
             //skapa gui
             Paper paper = new Paper(clientThread);
             clientThread.paper = paper;
-            ClientGUI gui = new ClientGUI(paper);
+            ClientGUI gui = new ClientGUI(paper, clientThread);
             
             clientThread.start();
 

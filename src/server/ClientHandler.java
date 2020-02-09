@@ -56,8 +56,22 @@ public class ClientHandler implements Runnable {
                 in = new BufferedReader(new InputStreamReader(dis));
                 //det inkomna meddelandet
                 String message = in.readLine();
+                
+                // if startswith tag
+                //check if correct
+                //if correct, send specific message
+                
+                if(message.startsWith("THETAG")){
+                
+                    System.out.println("guess detected");
+                
+                }
+                
+                else{
+                    System.out.println("wasnt guess");
                 counter++;
                 Server.broadcastData(message);
+                }
             } catch (IOException ex) {
 
                 running = false;
