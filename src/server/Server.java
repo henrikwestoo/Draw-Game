@@ -16,54 +16,74 @@ import java.util.logging.Logger;
  *
  * @author Henrik
  */
-public class Server {
+public class Server implements Runnable {
 
     static ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
     static int clientCount;
-    ServerGUI serverGUI;
+    static ServerGUI serverGUI;
     int port;
-    boolean running;
-    
-    public void startServer(int port){
-        
-        ServerSocket serverSocket;
-        Socket clientSocket;
-        this.port = port;
-        running = true;
+    boolean running = true;
+    ServerSocket serverSocket;
+    Socket clientSocket;
 
+    public void stop() {
+
+        running = false;
         try {
-            serverSocket = new ServerSocket(port);
-            System.out.println("Server started");
-            
-            while (running) {
+            //gör så att inga fler kan connecta
+            serverSocket.close();
+            serverGUI.appendInfoText("Server-socket was closed");
 
-                clientSocket = serverSocket.accept();
-                clientCount++;
-                System.out.println("Connection request recieved");
+            //gör så att alla clients kopplas ned
+            for (ClientHandler client : clients) {
 
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
-                clients.add(clientHandler);
-
-                System.out.println("ClientHandler created");
-
-                Thread thread = new Thread(clientHandler);
-                thread.start();
-                
-                broadcastNewWord();
-                
+                client.socket.close();
 
             }
+            serverGUI.appendInfoText("Client sockets were closed");
 
         } catch (IOException ex) {
+            System.out.println("123");
             System.out.println(ex.getMessage());
         }
 
     }
-    
-    static void broadcastNewWord(){
-    
+
+    @Override
+    public void run() {
+
+        try {
+            serverSocket = new ServerSocket(port);
+            serverGUI.appendInfoText("Server started");
+
+            while (running) {
+
+                clientSocket = serverSocket.accept();
+                clientCount++;
+                serverGUI.appendInfoText("Connection request recieved from: " + clientSocket.getLocalAddress());
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                clients.add(clientHandler);
+                
+                serverGUI.appendInfoText("Clienthandler was created for: " + clientSocket.getLocalAddress());
+                
+                Thread thread = new Thread(clientHandler);
+                thread.start();
+
+                broadcastNewWord();
+
+            }
+
+        } catch (IOException ex) {
+            
+            System.out.println(ex.getMessage() + "hejhej");
+        }
+
+    }
+
+    static void broadcastNewWord() {
+
         broadcastData(WordGenerator.generateWord());
-    
+
     }
 
     static void broadcastData(String data) {
@@ -73,8 +93,8 @@ public class Server {
             client.sendMessage(data);
 
         }
-        System.out.println("broadcasted: " +data);
-        
+        System.out.println("broadcasted: " + data);
+
     }
-    
+
 }

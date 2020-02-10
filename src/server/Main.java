@@ -16,6 +16,7 @@ public class Main {
         Server server = new Server();
         ServerGUI serverGUI = new ServerGUI(server);
         serverGUI.setVisible(true);
+        server.serverGUI = serverGUI;
     }
     
 }

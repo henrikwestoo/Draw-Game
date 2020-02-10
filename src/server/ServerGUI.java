@@ -19,6 +19,14 @@ public class ServerGUI extends javax.swing.JFrame {
     public ServerGUI(Server server) {
         initComponents();
         this.server = server;
+        server.port = 2000;
+    }
+    
+    public void appendInfoText(String info){
+    
+        infoTxt.append(java.time.LocalTime.now() + " " + info + "\n");
+    
+    
     }
 
     /**
@@ -33,7 +41,7 @@ public class ServerGUI extends javax.swing.JFrame {
         startServerBtn = new javax.swing.JButton();
         stopServerBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        infoTxt = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,34 +59,37 @@ public class ServerGUI extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        infoTxt.setColumns(20);
+        infoTxt.setLineWrap(true);
+        infoTxt.setRows(5);
+        infoTxt.setMaximumSize(new java.awt.Dimension(100, 100));
+        jScrollPane1.setViewportView(infoTxt);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(stopServerBtn)
                     .addComponent(startServerBtn))
                 .addGap(53, 53, 53))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addComponent(startServerBtn)
-                .addGap(18, 18, 18)
-                .addComponent(stopServerBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(250, Short.MAX_VALUE)
+                        .addComponent(startServerBtn)
+                        .addGap(18, 18, 18)
+                        .addComponent(stopServerBtn)))
                 .addGap(31, 31, 31))
         );
 
@@ -86,17 +97,19 @@ public class ServerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerBtnActionPerformed
-        server.startServer(2000);
+        Thread thread = new Thread(server);
+        thread.start();
         //SwingWorker.execute();
     }//GEN-LAST:event_startServerBtnActionPerformed
 
     private void stopServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerBtnActionPerformed
-        server.running = false;
+       // server.running = false;
+       server.stop();
     }//GEN-LAST:event_stopServerBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea infoTxt;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton startServerBtn;
     private javax.swing.JButton stopServerBtn;
     // End of variables declaration//GEN-END:variables

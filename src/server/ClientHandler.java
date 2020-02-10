@@ -48,8 +48,6 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
 
-        int counter = 0;
-
         while (running) {
 
             try {
@@ -81,15 +79,13 @@ public class ClientHandler implements Runnable {
 
                 } //det var en point som skickades
                 else {
-                    System.out.println("wasnt guess");
-                    counter++;
                     Server.broadcastData(message);
                 }
             } catch (IOException ex) {
 
                 running = false;
-                System.out.println("Client disconnected");
-                System.out.println(ex.getMessage());
+                Server.serverGUI.appendInfoText("Client "+socket.getLocalAddress()+" disconnected");
+                
             }
 
         }
