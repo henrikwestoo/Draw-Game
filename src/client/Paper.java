@@ -49,9 +49,12 @@ public class Paper extends JPanel {
     }
 
     public void addAndSendPoint(Point p) {
+        
+        if(clientThread.myTurn == true){
         hs.add(p);
         repaint();
         clientThread.sendPoint(p);
+        }
     }
 
     public void addPoint(Point p) {

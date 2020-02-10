@@ -28,6 +28,7 @@ public class ClientHandler implements Runnable {
     PrintWriter out;
     String ip;
     boolean running = true;
+    boolean myTurn;
 
     public ClientHandler(Socket socket) {
 
@@ -43,6 +44,14 @@ public class ClientHandler implements Runnable {
             System.out.println(ex.getMessage());
         }
 
+    }
+    
+    public void setTurn(boolean myTurn){
+    
+    this.myTurn = myTurn;
+    Server.serverGUI.appendInfoText("It is now "+ ip +"s turn");
+    sendMessage("TURN$-TRUE$");
+    
     }
 
     @Override
@@ -68,6 +77,8 @@ public class ClientHandler implements Runnable {
                         Server.broadcastData("METHOD$-CALL$-CORRECTANSWER$");
                         System.out.println("A CORRECT GUESS WAS MADE!!!");
                         
+                        
+                        Server.setNewTurn();
                         Server.broadcastNewWord();
 
                     } else if (message.startsWith("GUESS$-INCORRECT$$")) {

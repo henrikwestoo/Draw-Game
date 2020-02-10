@@ -21,6 +21,7 @@ public class ClientThread extends Thread {
     Socket socket;
     Paper paper;
     String currentCorrectAnswer;
+    boolean myTurn;
     ClientGUI gui;
 
     public ClientThread(Socket socket) {
@@ -97,6 +98,18 @@ public class ClientThread extends Thread {
                     System.out.println("a correct answer was given by a user");
                     
                 } 
+                
+                else if(message.equals("TURN$-TRUE$")){
+                
+                    myTurn = true;
+                    gui.setTurn(true);
+                }
+                
+                    else if(message.equals("TURN$-FALSE$")){
+                
+                    myTurn = false;
+                    gui.setTurn(false);
+                }
                 
                 
                 else {

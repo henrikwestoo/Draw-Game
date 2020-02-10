@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,7 +44,7 @@ public class Server implements Runnable {
             serverGUI.appendInfoText("Client sockets were closed");
 
         } catch (IOException ex) {
-            System.out.println("123");
+
             System.out.println(ex.getMessage());
         }
 
@@ -62,22 +63,35 @@ public class Server implements Runnable {
                 clientCount++;
                 serverGUI.appendInfoText("Connection request recieved from: " + clientSocket.getLocalAddress());
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
+
                 clients.add(clientHandler);
-                
-                serverGUI.appendInfoText("Clienthandler was created for: " + clientSocket.getLocalAddress());
-                
+
+                serverGUI.appendInfoText("Client " + clientSocket.getLocalAddress() + "was added to clients");
+
                 Thread thread = new Thread(clientHandler);
                 thread.start();
-
+                
+                setNewTurn();
                 broadcastNewWord();
 
             }
 
         } catch (IOException ex) {
-            
+
             System.out.println(ex.getMessage() + "hejhej");
         }
 
+    }
+    
+    static void setNewTurn(){
+        //resetar turnen
+        broadcastData("TURN$-FALSE$");
+        
+        //väljer en slumpmässig spelare och gör det till deras tur
+        Random r = new Random();
+        clients.get(r.nextInt(clients.size())).setTurn(true);
+        
+    
     }
 
     static void broadcastNewWord() {

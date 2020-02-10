@@ -32,6 +32,7 @@
                           <Component id="messageTxt" min="-2" pref="282" max="-2" attributes="0"/>
                           <Component id="sendMessageBtn" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="infoLbl" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="turnLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>
@@ -48,7 +49,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Component id="correctAnswerHintLbl" min="-2" pref="54" max="-2" attributes="0"/>
-              <EmptySpace pref="64" max="32767" attributes="0"/>
+              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <Component id="turnLbl" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="infoLbl" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="209" max="-2" attributes="0"/>
@@ -96,6 +99,11 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="infoLbl">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="turnLbl">
       <Properties>
         <Property name="text" type="java.lang.String" value="jLabel1"/>
       </Properties>

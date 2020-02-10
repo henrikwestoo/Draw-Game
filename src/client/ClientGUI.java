@@ -37,6 +37,20 @@ public class ClientGUI extends javax.swing.JFrame {
         infoLbl.setText(text);
     
     }
+    
+    public void setTurn(boolean myTurn){
+    
+        if(myTurn)
+        {
+            turnLbl.setText("It is your turn");
+        }
+        else{
+        
+            turnLbl.setText("It is someone elses turn");
+        
+        }
+    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,6 +67,7 @@ public class ClientGUI extends javax.swing.JFrame {
         messagesTxt = new javax.swing.JTextArea();
         sendMessageBtn = new javax.swing.JButton();
         infoLbl = new javax.swing.JLabel();
+        turnLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,6 +87,8 @@ public class ClientGUI extends javax.swing.JFrame {
 
         infoLbl.setText("jLabel1");
 
+        turnLbl.setText("jLabel1");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +101,8 @@ public class ClientGUI extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sendMessageBtn)
-                            .addComponent(infoLbl))
+                            .addComponent(infoLbl)
+                            .addComponent(turnLbl))
                         .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -95,7 +113,9 @@ public class ClientGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(turnLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(infoLbl)
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,5 +142,6 @@ public class ClientGUI extends javax.swing.JFrame {
     private javax.swing.JTextField messageTxt;
     private javax.swing.JTextArea messagesTxt;
     private javax.swing.JButton sendMessageBtn;
+    private javax.swing.JLabel turnLbl;
     // End of variables declaration//GEN-END:variables
 }
