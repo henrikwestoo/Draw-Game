@@ -72,7 +72,6 @@ public class Server implements Runnable {
                 thread.start();
                 
                 setNewTurn();
-                broadcastNewWord();
 
             }
 
@@ -91,13 +90,10 @@ public class Server implements Runnable {
         Random r = new Random();
         clients.get(r.nextInt(clients.size())).setTurn(true);
         
-    
-    }
-
-    static void broadcastNewWord() {
-
+        //genererar och skickar ut ett nytt ord
         broadcastData(WordGenerator.generateWord());
-
+        
+    
     }
 
     static void broadcastData(String data) {

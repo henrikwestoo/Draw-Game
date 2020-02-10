@@ -79,7 +79,6 @@ public class ClientHandler implements Runnable {
                         
                         
                         Server.setNewTurn();
-                        Server.broadcastNewWord();
 
                     } else if (message.startsWith("GUESS$-INCORRECT$$")) {
 

@@ -84,6 +84,9 @@ public class ClientThread extends Thread {
                 if (message.startsWith("WORD-TAG")) {
 
                     System.out.println("correct answer recieved: " + message);
+                    
+                    paper.resetCanvas();
+                    
                     String trimmedMessage = message.substring(message.lastIndexOf("$") + 1);
                     currentCorrectAnswer = trimmedMessage;
                     gui.setAnswer(trimmedMessage);

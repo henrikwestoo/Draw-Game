@@ -61,6 +61,13 @@ public class Paper extends JPanel {
         hs.add(p);
         repaint();
     }
+    
+    public void resetCanvas(){
+    
+        hs.clear();
+        repaint();
+    
+    }
 
     class L1 extends MouseAdapter {
 

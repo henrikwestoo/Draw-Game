@@ -13,9 +13,10 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  * @author Henrik
  */
 public class ClientGUI extends javax.swing.JFrame {
-    
+
     ClientThread clientThread;
-    
+    Paper paper;
+
     public ClientGUI(Paper paper, ClientThread clientThread) {
         this.clientThread = clientThread;
         setVisible(true);
@@ -23,33 +24,56 @@ public class ClientGUI extends javax.swing.JFrame {
         this.setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().add(paper, BorderLayout.CENTER);
-        
+        this.paper = paper;
+
+        hideTurnBasedElements();
+
     }
-    
-    public void setAnswer(String answer){
-    
+
+    public void hideTurnBasedElements() {
+
+        sendMessageBtn.setVisible(false);
+        resetCanvasBtn.setVisible(false);
+        messageTxt.setVisible(false);
+
+    }
+
+    public void revealMsgButton() {
+
+        sendMessageBtn.setVisible(true);
+        messageTxt.setVisible(true);
+
+    }
+
+    public void revealResetButton() {
+
+        resetCanvasBtn.setVisible(true);
+
+    }
+
+    public void setAnswer(String answer) {
+
         correctAnswerHintLbl.setText(answer);
-    
+
     }
-    
-    public void setInfoText(String text){
-    
+
+    public void setInfoText(String text) {
+
         infoLbl.setText(text);
-    
+
     }
-    
-    public void setTurn(boolean myTurn){
-    
-        if(myTurn)
-        {
+
+    public void setTurn(boolean myTurn) {
+        
+        hideTurnBasedElements();
+
+        if (myTurn) {
             turnLbl.setText("It is your turn");
-        }
-        else{
-        
+            revealResetButton();
+        } else {
             turnLbl.setText("It is someone elses turn");
-        
+            revealMsgButton();
         }
-    
     }
 
     /**
@@ -68,6 +92,7 @@ public class ClientGUI extends javax.swing.JFrame {
         sendMessageBtn = new javax.swing.JButton();
         infoLbl = new javax.swing.JLabel();
         turnLbl = new javax.swing.JLabel();
+        resetCanvasBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +114,13 @@ public class ClientGUI extends javax.swing.JFrame {
 
         turnLbl.setText("jLabel1");
 
+        resetCanvasBtn.setText("RESET CANVAS");
+        resetCanvasBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetCanvasBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,7 +132,10 @@ public class ClientGUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sendMessageBtn)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(sendMessageBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(resetCanvasBtn))
                             .addComponent(infoLbl)
                             .addComponent(turnLbl))
                         .addGap(46, 46, 46))
@@ -122,7 +157,9 @@ public class ClientGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(sendMessageBtn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sendMessageBtn)
+                    .addComponent(resetCanvasBtn))
                 .addGap(41, 41, 41))
         );
 
@@ -130,9 +167,13 @@ public class ClientGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendMessageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMessageBtnActionPerformed
-        
+
         clientThread.sendGuess(messageTxt.getText());
     }//GEN-LAST:event_sendMessageBtnActionPerformed
+
+    private void resetCanvasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetCanvasBtnActionPerformed
+        paper.resetCanvas();
+    }//GEN-LAST:event_resetCanvasBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -141,6 +182,7 @@ public class ClientGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField messageTxt;
     private javax.swing.JTextArea messagesTxt;
+    private javax.swing.JButton resetCanvasBtn;
     private javax.swing.JButton sendMessageBtn;
     private javax.swing.JLabel turnLbl;
     // End of variables declaration//GEN-END:variables
