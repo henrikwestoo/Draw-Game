@@ -24,6 +24,9 @@ public class Paper extends JPanel {
 
     public HashSet hs = new HashSet();
     ClientThread clientThread;
+    
+    int brushSizeX;
+    int brushSizeY;
 
     public Paper(ClientThread clientThread) {
         this.clientThread = clientThread;
@@ -31,6 +34,9 @@ public class Paper extends JPanel {
         this.setSize(450, 400);
         addMouseListener(new L1());
         addMouseMotionListener(new L2());
+        
+        brushSizeX = 20;
+        brushSizeY = 20;
     }
 
     public void paintComponent(Graphics g) {
@@ -41,7 +47,7 @@ public class Paper extends JPanel {
         try {
             while (i.hasNext()) {
                 Point p = (Point) i.next();
-                g.fillOval(p.x, p.y, 10, 10);
+                g.fillOval(p.x, p.y, brushSizeX, brushSizeY);
             }
         } catch (Exception e) {
         }
@@ -74,7 +80,7 @@ public class Paper extends JPanel {
 
         public void mousePressed(MouseEvent me) {
             addAndSendPoint(me.getPoint());
-            System.out.println("MOUSEPRESSED PRINT");
+            
         }
     }
 
@@ -82,7 +88,7 @@ public class Paper extends JPanel {
 
         public void mouseDragged(MouseEvent me) {
             addAndSendPoint(me.getPoint());
-            System.out.println("MOUSEDRAGGED PRINT");
+           
         }
     }
 

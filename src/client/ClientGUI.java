@@ -53,8 +53,22 @@ public class ClientGUI extends javax.swing.JFrame {
 
     public void setAnswer(String answer) {
 
-        correctAnswerHintLbl.setText(answer);
+        if (!clientThread.myTurn) {
+            
+            String hint = "_";
+            
+            for(int i = 1; i <= answer.length(); i++){
+            
+            hint += " _";
+            
+            }
+            
+            correctAnswerHintLbl.setText(hint);
 
+        } else {
+
+            correctAnswerHintLbl.setText(answer);
+        }
     }
 
     public void setInfoText(String text) {
@@ -64,7 +78,7 @@ public class ClientGUI extends javax.swing.JFrame {
     }
 
     public void setTurn(boolean myTurn) {
-        
+
         hideTurnBasedElements();
 
         if (myTurn) {
@@ -93,6 +107,8 @@ public class ClientGUI extends javax.swing.JFrame {
         infoLbl = new javax.swing.JLabel();
         turnLbl = new javax.swing.JLabel();
         resetCanvasBtn = new javax.swing.JButton();
+        brushCmb = new javax.swing.JComboBox<>();
+        brushSizeTxt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +137,15 @@ public class ClientGUI extends javax.swing.JFrame {
             }
         });
 
+        brushCmb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Small", "Medium", "Large" }));
+        brushCmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brushCmbActionPerformed(evt);
+            }
+        });
+
+        brushSizeTxt.setText("Brush size");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,20 +160,26 @@ public class ClientGUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(sendMessageBtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resetCanvasBtn))
+                                .addComponent(resetCanvasBtn)
+                                .addGap(18, 18, 18)
+                                .addComponent(brushSizeTxt))
                             .addComponent(infoLbl)
                             .addComponent(turnLbl))
                         .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(708, 708, 708)
+                .addComponent(brushCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(turnLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(infoLbl)
@@ -159,8 +190,11 @@ public class ClientGUI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sendMessageBtn)
-                    .addComponent(resetCanvasBtn))
-                .addGap(41, 41, 41))
+                    .addComponent(resetCanvasBtn)
+                    .addComponent(brushSizeTxt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(brushCmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -173,11 +207,24 @@ public class ClientGUI extends javax.swing.JFrame {
 
     private void resetCanvasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetCanvasBtnActionPerformed
         paper.resetCanvas();
-         clientThread.sendResetMessage();
+        clientThread.sendResetMessage();
     }//GEN-LAST:event_resetCanvasBtnActionPerformed
+
+    private void brushCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brushCmbActionPerformed
+
+        String value = String.valueOf(brushCmb.getSelectedItem());
+        
+        if(value.equals("Small")){paper.brushSizeX = 10; paper.brushSizeY = 10;}
+        else if(value.equals("Medium")){paper.brushSizeX = 20; paper.brushSizeY = 20;}
+        else if(value.equals("Large")){paper.brushSizeX = 30; paper.brushSizeY = 30;}
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_brushCmbActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> brushCmb;
+    private javax.swing.JLabel brushSizeTxt;
     private javax.swing.JLabel correctAnswerHintLbl;
     private javax.swing.JLabel infoLbl;
     private javax.swing.JScrollPane jScrollPane1;
