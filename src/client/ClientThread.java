@@ -112,6 +112,7 @@ public class ClientThread extends Thread {
                 
                     myTurn = false;
                     gui.setTurn(false);
+                    //
                 }
                 
                 
