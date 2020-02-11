@@ -173,6 +173,7 @@ public class ClientGUI extends javax.swing.JFrame {
 
     private void resetCanvasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetCanvasBtnActionPerformed
         paper.resetCanvas();
+         clientThread.sendResetMessage();
     }//GEN-LAST:event_resetCanvasBtnActionPerformed
 
 

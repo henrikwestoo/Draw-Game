@@ -11,6 +11,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,49 +25,44 @@ public class ClientThread extends Thread {
     String currentCorrectAnswer;
     boolean myTurn;
     ClientGUI gui;
+    PrintWriter out;
 
     public ClientThread(Socket socket) {
 
         this.socket = socket;
+        try {
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
 
     }
 
     //send point
     public void sendPoint(Point p) {
+        String pointString = "" + p.x + "," + p.y + "";
+        out.println(pointString);
 
-        try {
-
-            String pointString = "" + p.x + "," + p.y + "";
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println(pointString);
-
-        } catch (IOException ex) {
-            System.out.println("Could not send message");
-        }
     }
 
     //send guess
     public void sendGuess(String guess) {
+        
+        String formattedGuess;
+        if (guess.equals(currentCorrectAnswer)) {
 
-        try {
+            formattedGuess = "GUESS$-CORRECT$$" + guess;
+        } else {
 
-            String formattedGuess;
-            if (guess.equals(currentCorrectAnswer)) {
-
-                formattedGuess = "GUESS$-CORRECT$$" + guess;
-
-            } else {
-
-                formattedGuess = "GUESS$-INCORRECT$$" + guess;
-
-            }
-
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println(formattedGuess);
-
-        } catch (IOException ex) {
-            System.out.println("Could not send message");
+            formattedGuess = "GUESS$-INCORRECT$$" + guess;
         }
+        out.println(formattedGuess);
+    }
+
+    public void sendResetMessage() {
+
+        out.println("RESET$");
+        
     }
 
     //recievepoint()
@@ -84,37 +81,36 @@ public class ClientThread extends Thread {
                 if (message.startsWith("WORD-TAG")) {
 
                     System.out.println("correct answer recieved: " + message);
-                    
+
                     paper.resetCanvas();
-                    
+
                     String trimmedMessage = message.substring(message.lastIndexOf("$") + 1);
                     currentCorrectAnswer = trimmedMessage;
                     gui.setAnswer(trimmedMessage);
                     System.out.println("correct answer set as: " + trimmedMessage);
 
-                } 
-                
-                else if (message.equals("METHOD$-CALL$-CORRECTANSWER$")) 
-                {
+                } else if (message.equals("METHOD$-CALL$-CORRECTANSWER$")) {
 
                     gui.setInfoText("A USER HAS GIVEN THE CORRECT ANSWER");
                     System.out.println("a correct answer was given by a user");
-                    
-                } 
-                
-                else if(message.equals("TURN$-TRUE$")){
-                
+
+                } else if (message.equals("TURN$-TRUE$")) {
+
                     myTurn = true;
                     gui.setTurn(true);
-                }
-                
-                    else if(message.equals("TURN$-FALSE$")){
-                
+                } else if (message.equals("TURN$-FALSE$")) {
+
                     myTurn = false;
                     gui.setTurn(false);
                     //
-                }
+                } 
                 
+                else if(message.equals("RESET$"))
+                {
+                
+                    paper.resetCanvas();
+                
+                }
                 
                 else {
 

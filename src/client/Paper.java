@@ -66,6 +66,7 @@ public class Paper extends JPanel {
     
         hs.clear();
         repaint();
+       
     
     }
 

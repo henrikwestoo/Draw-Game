@@ -67,6 +67,7 @@ public class ClientHandler implements Runnable {
                 // if startswith tag
                 //check if correct
                 //if correct, send specific message
+                //gör om till switch
                 if (message.startsWith("GUESS$")) {
 
                     System.out.println("guess detected");
@@ -87,7 +88,15 @@ public class ClientHandler implements Runnable {
 
                     }
 
-                } //det var en point som skickades
+                }
+                
+                else if(message.startsWith("RESET$")){
+                
+                    Server.broadcastData("RESET$");
+                
+                }
+                
+                //det var en point som skickades
                 else {
                     Server.broadcastData(message);
                 }
