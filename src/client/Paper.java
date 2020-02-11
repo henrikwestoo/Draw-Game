@@ -35,8 +35,8 @@ public class Paper extends JPanel {
         addMouseListener(new L1());
         addMouseMotionListener(new L2());
         
-        brushSizeX = 20;
-        brushSizeY = 20;
+        brushSizeX = 10;
+        brushSizeY = 10;
     }
 
     public void paintComponent(Graphics g) {

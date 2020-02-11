@@ -34,8 +34,6 @@
                               <Component id="sendMessageBtn" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="resetCanvasBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="brushSizeTxt" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="infoLbl" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="turnLbl" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -47,11 +45,6 @@
                       <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                   </Group>
               </Group>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="708" max="-2" attributes="0"/>
-              <Component id="brushCmb" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,11 +65,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="sendMessageBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="resetCanvasBtn" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="brushSizeTxt" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="brushCmb" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -132,28 +122,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="resetCanvasBtnActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="brushCmb">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="Small"/>
-            <StringItem index="1" value="Medium"/>
-            <StringItem index="2" value="Large"/>
-          </StringArray>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brushCmbActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-      </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="brushSizeTxt">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Brush size"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
