@@ -21,11 +21,16 @@ public class WordGenerator {
     public WordGenerator() {
 
         words = new ArrayList<>();
-
-        words.add("elefant");
-        words.add("lejon");
-        words.add("pizza");
-        words.add("lampa");
+        words.add("boll");
+        words.add("tomasz");
+        words.add("henrik");
+        words.add("alexander");
+        
+        words.add("leonard");
+        words.add("samuel");
+        words.add("aryan");
+        words.add("kai");
+        
 
         usedWords = new ArrayList<>();
         usedWords.add("placeholder");

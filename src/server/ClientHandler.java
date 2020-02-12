@@ -111,6 +111,8 @@ public class ClientHandler implements Runnable {
 
                 running = false;
                 server.serverGUI.appendInfoText(alias +" "+socket.getLocalAddress()+" disconnected");
+                server.setNewTurn();
+                server.clients.remove(this);
                 
             }
 

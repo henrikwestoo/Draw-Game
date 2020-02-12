@@ -27,10 +27,12 @@ public class Server implements Runnable {
     ServerSocket serverSocket;
     Socket clientSocket;
     WordGenerator wg;
+    int currentTurnClientIndex;
     
     public Server(){
     
         wg = new WordGenerator();
+        currentTurnClientIndex = 0;
     
     }
 
@@ -99,9 +101,15 @@ public class Server implements Runnable {
         //resetar turnen
         broadcastData("TURN$-FALSE$");
         
-        //väljer en slumpmässig spelare och gör det till deras tur
-        Random r = new Random();
-        clients.get(r.nextInt(clients.size())).setTurn(true);
+       
+       //väljer nästa spelare och gör det till deras tur 
+        if(currentTurnClientIndex == clients.size()){
+        
+            currentTurnClientIndex = 0;
+        }
+        
+        clients.get(currentTurnClientIndex).setTurn(true);
+        currentTurnClientIndex++;
         
         //genererar och skickar ut ett nytt ord
         String word = wg.generateWord();
