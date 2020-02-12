@@ -39,6 +39,7 @@ public class Server implements Runnable {
             for (ClientHandler client : clients) {
 
                 client.socket.close();
+                clients.remove(client);
 
             }
             
