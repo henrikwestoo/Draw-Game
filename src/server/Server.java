@@ -101,7 +101,6 @@ public class Server implements Runnable {
         //resetar turnen
         broadcastData("TURN$-FALSE$");
         
-       
        //väljer nästa spelare och gör det till deras tur 
         if(currentTurnClientIndex == clients.size()){
         
@@ -117,7 +116,6 @@ public class Server implements Runnable {
         
         String trimmedWord = word.substring(word.lastIndexOf("$") + 1);
         serverGUI.appendInfoText("New word was generated: "+trimmedWord);
-        
     
     }
 
