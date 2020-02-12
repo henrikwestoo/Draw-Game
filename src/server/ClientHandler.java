@@ -72,41 +72,70 @@ public class ClientHandler implements Runnable {
                 //check if correct
                 //if correct, send specific message
                 //gör om till switch
-                if (message.startsWith("GUESS")) {
-
-                    System.out.println("guess detected");
-
-                    if (message.startsWith("GUESS-CORRECT$")) {
-
-                        //broadcast infomessage
+                
+                String[] sa = message.split("\\$");
+                String tag = sa[0];
+                System.out.println("TAG WAS: " + tag);
+                
+                switch(tag){
+                
+                    case "GUESS-CORRECT":
                         server.broadcastData("METHOD-CALL-CORRECTANSWER$");
                         System.out.println("A CORRECT GUESS WAS MADE!!!");
-                        
-                        
                         server.setNewTurn();
-
-                    } else if (message.startsWith("GUESS-INCORRECT$")) {
-
-                        //append to chat
+                        break;
+                        
+                    case "GUESS-INCORRECT":
                         String formattedMessage = "CHAT-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
                         server.broadcastData(formattedMessage);
                         System.out.println(formattedMessage +" was sentADGSGDJ");
                         System.out.println("User gave an incorrectasd guess: " + formattedMessage);
-
-                    }
-
+                        break;
+                    case "RESET":
+                        server.broadcastData("RESET$");
+                     
+                    default:
+                        server.broadcastData(message);
                 }
                 
-                else if(message.startsWith("RESET$")){
                 
-                    server.broadcastData("RESET$");
                 
-                }
                 
-                //det var en point som skickades
-                else {
-                    server.broadcastData(message);
-                }
+                
+                
+//                if (message.startsWith("GUESS")) {
+//
+//                    System.out.println("guess detected");
+//
+//                    if (message.startsWith("GUESS-CORRECT$")) {
+//
+//                        //broadcast infomessage
+//                        server.broadcastData("METHOD-CALL-CORRECTANSWER$");
+//                        System.out.println("A CORRECT GUESS WAS MADE!!!");
+//                        server.setNewTurn();
+//
+//                    } else if (message.startsWith("GUESS-INCORRECT$")) {
+//
+//                        //append to chat
+//                        String formattedMessage = "CHAT-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
+//                        server.broadcastData(formattedMessage);
+//                        System.out.println(formattedMessage +" was sentADGSGDJ");
+//                        System.out.println("User gave an incorrectasd guess: " + formattedMessage);
+//
+//                    }
+//
+//                }
+//                
+//                else if(message.startsWith("RESET$")){
+//                
+//                    server.broadcastData("RESET$");
+//                
+//                }
+//                
+//                //det var en point som skickades
+//                else {
+//                    server.broadcastData(message);
+//                }
             } catch (IOException ex) {
 
                 running = false;

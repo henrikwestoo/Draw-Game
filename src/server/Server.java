@@ -92,7 +92,7 @@ public class Server implements Runnable {
 
         } catch (IOException ex) {
 
-            System.out.println(ex.getMessage() + "hejhej");
+            serverGUI.setInfoLabel(ex.getMessage());
         }
 
     }
