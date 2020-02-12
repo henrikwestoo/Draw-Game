@@ -30,11 +30,13 @@ public class ClientHandler implements Runnable {
     boolean running = true;
     boolean myTurn;
     String alias;
+    Server server;
 
-    public ClientHandler(Socket socket, int alias) {
+    public ClientHandler(Socket socket, int alias, Server server) {
 
         this.socket = socket;
         this.alias = "Player " + alias;
+        this.server = server;
 
         try {
 
@@ -51,7 +53,7 @@ public class ClientHandler implements Runnable {
     public void setTurn(boolean myTurn){
     
     this.myTurn = myTurn;
-    Server.serverGUI.appendInfoText("It is now "+ alias +"s turn");
+    server.serverGUI.appendInfoText("It is now "+ alias +"s turn");
     sendMessage("TURN$-TRUE$");
     
     }
@@ -77,17 +79,17 @@ public class ClientHandler implements Runnable {
                     if (message.startsWith("GUESS$-CORRECT$$")) {
 
                         //broadcast infomessage
-                        Server.broadcastData("METHOD$-CALL$-CORRECTANSWER$");
+                        server.broadcastData("METHOD$-CALL$-CORRECTANSWER$");
                         System.out.println("A CORRECT GUESS WAS MADE!!!");
                         
                         
-                        Server.setNewTurn();
+                        server.setNewTurn();
 
                     } else if (message.startsWith("GUESS$-INCORRECT$$")) {
 
                         //append to chat
                         String formattedMessage = "CHAT$-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
-                        Server.broadcastData(formattedMessage);
+                        server.broadcastData(formattedMessage);
                         System.out.println(formattedMessage +" was sentADGSGDJ");
                         System.out.println("User gave an incorrectasd guess: " + formattedMessage);
 
@@ -97,18 +99,18 @@ public class ClientHandler implements Runnable {
                 
                 else if(message.startsWith("RESET$")){
                 
-                    Server.broadcastData("RESET$");
+                    server.broadcastData("RESET$");
                 
                 }
                 
                 //det var en point som skickades
                 else {
-                    Server.broadcastData(message);
+                    server.broadcastData(message);
                 }
             } catch (IOException ex) {
 
                 running = false;
-                Server.serverGUI.appendInfoText(alias +" "+socket.getLocalAddress()+" disconnected");
+                server.serverGUI.appendInfoText(alias +" "+socket.getLocalAddress()+" disconnected");
                 
             }
 

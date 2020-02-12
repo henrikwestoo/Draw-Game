@@ -26,6 +26,13 @@ public class Server implements Runnable {
     boolean running = true;
     ServerSocket serverSocket;
     Socket clientSocket;
+    WordGenerator wg;
+    
+    public Server(){
+    
+        wg = new WordGenerator();
+    
+    }
 
     public void stop() {
 
@@ -67,7 +74,7 @@ public class Server implements Runnable {
                 clientSocket = serverSocket.accept();
                 clientCount++;
                 serverGUI.appendInfoText("Connection request recieved from: " + clientSocket.getLocalAddress());
-                ClientHandler clientHandler = new ClientHandler(clientSocket, clientCount);
+                ClientHandler clientHandler = new ClientHandler(clientSocket, clientCount, this);
 
                 clients.add(clientHandler);
                 
@@ -88,7 +95,7 @@ public class Server implements Runnable {
 
     }
     
-    static void setNewTurn(){
+    public void setNewTurn(){
         //resetar turnen
         broadcastData("TURN$-FALSE$");
         
@@ -97,12 +104,16 @@ public class Server implements Runnable {
         clients.get(r.nextInt(clients.size())).setTurn(true);
         
         //genererar och skickar ut ett nytt ord
-        broadcastData(WordGenerator.generateWord());
+        String word = wg.generateWord();
+        broadcastData(word);
+        
+        String trimmedWord = word.substring(word.lastIndexOf("$") + 1);
+        serverGUI.appendInfoText("New word was generated: "+trimmedWord);
         
     
     }
 
-    static void broadcastData(String data) {
+    public void broadcastData(String data) {
 
         for (ClientHandler client : clients) {
 

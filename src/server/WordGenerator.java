@@ -13,23 +13,49 @@ import java.util.Random;
  * @author Henrik
  */
 public class WordGenerator {
-    
+
     public String word;
-    
-    public static String generateWord(){
-    
-        ArrayList<String> words = new ArrayList<>();
-        
+    public ArrayList<String> words;
+    public ArrayList<String> usedWords;
+
+    public WordGenerator() {
+
+        words = new ArrayList<>();
+
         words.add("elefant");
         words.add("lejon");
         words.add("pizza");
         words.add("lampa");
-        
-        Random r = new Random();
-        int index = r.nextInt(4);
-        String tag = "WORD-TAG$$";
-        
-        return tag + words.get(index);
+
+        usedWords = new ArrayList<>();
+        usedWords.add("placeholder");
+
     }
-    
+
+    public String generateWord() {
+
+        Random r = new Random();
+        String tag = "WORD-TAG$$";
+
+        word = words.get(r.nextInt(words.size()));
+
+        while (usedWords.contains(word)) {
+
+            if (words.size() == usedWords.size()) {
+                usedWords.clear();
+                System.out.println("usedwords was emptied!!");
+            }
+
+            int index = r.nextInt(words.size());
+            word = words.get(index);
+
+            System.out.println("Words: " + words.size() + "  Usedwords: " + usedWords.size());
+            System.out.println("new word was generated");
+        }
+
+        usedWords.add(word);
+
+        return tag + word;
+    }
+
 }
