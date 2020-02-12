@@ -40,7 +40,7 @@ public class WordGenerator {
     public String generateWord() {
 
         Random r = new Random();
-        String tag = "WORD-TAG$$";
+        String tag = "WORD-TAG$";
 
         word = words.get(r.nextInt(words.size()));
 

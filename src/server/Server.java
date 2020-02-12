@@ -99,7 +99,7 @@ public class Server implements Runnable {
     
     public void setNewTurn(){
         //resetar turnen
-        broadcastData("TURN$-FALSE$");
+        broadcastData("TURN-FALSE$");
         
        //väljer nästa spelare och gör det till deras tur 
         if(currentTurnClientIndex == clients.size()){

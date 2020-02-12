@@ -54,7 +54,7 @@ public class ClientHandler implements Runnable {
     
     this.myTurn = myTurn;
     server.serverGUI.appendInfoText("It is now "+ alias +"s turn");
-    sendMessage("TURN$-TRUE$");
+    sendMessage("TURN-TRUE$");
     
     }
 
@@ -72,23 +72,23 @@ public class ClientHandler implements Runnable {
                 //check if correct
                 //if correct, send specific message
                 //gör om till switch
-                if (message.startsWith("GUESS$")) {
+                if (message.startsWith("GUESS")) {
 
                     System.out.println("guess detected");
 
-                    if (message.startsWith("GUESS$-CORRECT$$")) {
+                    if (message.startsWith("GUESS-CORRECT$")) {
 
                         //broadcast infomessage
-                        server.broadcastData("METHOD$-CALL$-CORRECTANSWER$");
+                        server.broadcastData("METHOD-CALL-CORRECTANSWER$");
                         System.out.println("A CORRECT GUESS WAS MADE!!!");
                         
                         
                         server.setNewTurn();
 
-                    } else if (message.startsWith("GUESS$-INCORRECT$$")) {
+                    } else if (message.startsWith("GUESS-INCORRECT$")) {
 
                         //append to chat
-                        String formattedMessage = "CHAT$-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
+                        String formattedMessage = "CHAT-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
                         server.broadcastData(formattedMessage);
                         System.out.println(formattedMessage +" was sentADGSGDJ");
                         System.out.println("User gave an incorrectasd guess: " + formattedMessage);
