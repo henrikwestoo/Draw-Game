@@ -76,6 +76,13 @@ public class ClientGUI extends javax.swing.JFrame {
         infoLbl.setText(text);
 
     }
+    
+    public void appendToTextArea(String alias, String message){
+    
+        messagesTxt.append(alias+": "+message +"\n");
+    
+    
+    }
 
     public void setTurn(boolean myTurn) {
 
@@ -124,10 +131,6 @@ public class ClientGUI extends javax.swing.JFrame {
             }
         });
 
-        infoLbl.setText("jLabel1");
-
-        turnLbl.setText("jLabel1");
-
         resetCanvasBtn.setText("RESET CANVAS");
         resetCanvasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,30 +142,26 @@ public class ClientGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(504, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(511, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(sendMessageBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(resetCanvasBtn))
-                            .addComponent(infoLbl)
-                            .addComponent(turnLbl))
-                        .addGap(46, 46, 46))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57))))
+                    .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(messageTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(sendMessageBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resetCanvasBtn))
+                    .addComponent(infoLbl)
+                    .addComponent(turnLbl))
+                .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(turnLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(infoLbl)
@@ -182,10 +181,20 @@ public class ClientGUI extends javax.swing.JFrame {
 
     private void sendMessageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendMessageBtnActionPerformed
 
-        clientThread.sendGuess(messageTxt.getText());
+        String message = messageTxt.getText();
+        
+        if(!message.contains("$") && !message.equals("")){
+        clientThread.sendGuess(message);
+        messageTxt.setText("");
+        }
+        
+        else{
+            setInfoText("Empty message or illegal character in message");
+            };
     }//GEN-LAST:event_sendMessageBtnActionPerformed
 
     private void resetCanvasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetCanvasBtnActionPerformed
+        
         paper.resetCanvas();
         clientThread.sendResetMessage();
     }//GEN-LAST:event_resetCanvasBtnActionPerformed

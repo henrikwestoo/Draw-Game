@@ -29,10 +29,12 @@ public class ClientHandler implements Runnable {
     String ip;
     boolean running = true;
     boolean myTurn;
+    String alias;
 
-    public ClientHandler(Socket socket) {
+    public ClientHandler(Socket socket, int alias) {
 
         this.socket = socket;
+        this.alias = "Player " + alias;
 
         try {
 
@@ -49,7 +51,7 @@ public class ClientHandler implements Runnable {
     public void setTurn(boolean myTurn){
     
     this.myTurn = myTurn;
-    Server.serverGUI.appendInfoText("It is now "+ ip +"s turn");
+    Server.serverGUI.appendInfoText("It is now "+ alias +"s turn");
     sendMessage("TURN$-TRUE$");
     
     }
@@ -83,8 +85,11 @@ public class ClientHandler implements Runnable {
 
                     } else if (message.startsWith("GUESS$-INCORRECT$$")) {
 
-                        //do nothing
-                        System.out.println("User gave an incorrect guess: " + message);
+                        //append to chat
+                        String formattedMessage = "CHAT$-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
+                        Server.broadcastData(formattedMessage);
+                        System.out.println(formattedMessage +" was sentADGSGDJ");
+                        System.out.println("User gave an incorrectasd guess: " + formattedMessage);
 
                     }
 
@@ -103,7 +108,7 @@ public class ClientHandler implements Runnable {
             } catch (IOException ex) {
 
                 running = false;
-                Server.serverGUI.appendInfoText("Client "+socket.getLocalAddress()+" disconnected");
+                Server.serverGUI.appendInfoText(alias +" "+socket.getLocalAddress()+" disconnected");
                 
             }
 

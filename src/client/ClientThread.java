@@ -55,6 +55,7 @@ public class ClientThread extends Thread {
         } else {
 
             formattedGuess = "GUESS$-INCORRECT$$" + guess;
+            System.out.println(formattedGuess+ "WAS SENT");
         }
         out.println(formattedGuess);
     }
@@ -90,8 +91,8 @@ public class ClientThread extends Thread {
                     System.out.println("correct answer set as: " + trimmedMessage);
 
                 } else if (message.equals("METHOD$-CALL$-CORRECTANSWER$")) {
-
-                    gui.setInfoText("A USER HAS GIVEN THE CORRECT ANSWER");
+                    
+                    gui.setInfoText("The answer was: "+ currentCorrectAnswer);
                     System.out.println("a correct answer was given by a user");
 
                 } else if (message.equals("TURN$-TRUE$")) {
@@ -109,6 +110,20 @@ public class ClientThread extends Thread {
                 {
                 
                     paper.resetCanvas();
+                
+                }
+                
+                else if(message.startsWith("CHAT$-MESSAGE$"))
+                {
+                    String replaced = message.replace("CHAT$-MESSAGE$", "");
+                    String replaced2 = replaced.replace("$", "-");
+                    String[] msg = replaced2.split("-");
+                    
+                    
+                    String alias = msg[0];
+                    String chatMessage = msg[1];
+                    gui.appendToTextArea(alias, chatMessage);
+                    
                 
                 }
                 

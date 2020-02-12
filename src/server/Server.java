@@ -62,11 +62,12 @@ public class Server implements Runnable {
                 clientSocket = serverSocket.accept();
                 clientCount++;
                 serverGUI.appendInfoText("Connection request recieved from: " + clientSocket.getLocalAddress());
-                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                ClientHandler clientHandler = new ClientHandler(clientSocket, clientCount);
 
                 clients.add(clientHandler);
-
-                serverGUI.appendInfoText("Client " + clientSocket.getLocalAddress() + "was added to clients");
+                
+                String clientAlias = "Player " + clientCount;
+                serverGUI.appendInfoText("Client " + clientSocket.getLocalAddress() + " ("+clientAlias+") was added to clients");
 
                 Thread thread = new Thread(clientHandler);
                 thread.start();
