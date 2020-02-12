@@ -41,6 +41,9 @@ public class Server implements Runnable {
                 client.socket.close();
 
             }
+            
+            clientCount = 0;
+            
             serverGUI.appendInfoText("Client sockets were closed");
 
         } catch (IOException ex) {
@@ -54,8 +57,9 @@ public class Server implements Runnable {
     public void run() {
 
         try {
+            running = true;
             serverSocket = new ServerSocket(port);
-            serverGUI.appendInfoText("Server started");
+            serverGUI.appendInfoText("Server started on port " +port);
 
             while (running) {
 

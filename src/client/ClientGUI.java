@@ -120,6 +120,7 @@ public class ClientGUI extends javax.swing.JFrame {
         correctAnswerHintLbl.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         correctAnswerHintLbl.setText("_________");
 
+        messagesTxt.setEditable(false);
         messagesTxt.setColumns(20);
         messagesTxt.setRows(5);
         jScrollPane1.setViewportView(messagesTxt);

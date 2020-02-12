@@ -42,6 +42,8 @@ public class ServerGUI extends javax.swing.JFrame {
         stopServerBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         infoTxt = new javax.swing.JTextArea();
+        portTxt = new javax.swing.JTextField();
+        portLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,11 +61,14 @@ public class ServerGUI extends javax.swing.JFrame {
             }
         });
 
+        infoTxt.setEditable(false);
         infoTxt.setColumns(20);
         infoTxt.setLineWrap(true);
         infoTxt.setRows(5);
         infoTxt.setMaximumSize(new java.awt.Dimension(100, 100));
         jScrollPane1.setViewportView(infoTxt);
+
+        portLbl.setText("PORT");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -73,9 +78,11 @@ public class ServerGUI extends javax.swing.JFrame {
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(stopServerBtn)
-                    .addComponent(startServerBtn))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(stopServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(startServerBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(portLbl)
+                    .addComponent(portTxt))
                 .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
@@ -86,7 +93,11 @@ public class ServerGUI extends javax.swing.JFrame {
                         .addGap(44, 44, 44)
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(344, Short.MAX_VALUE)
+                        .addGap(88, 280, Short.MAX_VALUE)
+                        .addComponent(portLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(portTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(startServerBtn)
                         .addGap(18, 18, 18)
                         .addComponent(stopServerBtn)))
@@ -97,19 +108,27 @@ public class ServerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerBtnActionPerformed
+        
+        if(!portTxt.getText().isEmpty()){
+        
+        
+            server.port = Integer.valueOf(portTxt.getText());
+        
+        }
+        
         Thread thread = new Thread(server);
         thread.start();
-        //SwingWorker.execute();
     }//GEN-LAST:event_startServerBtnActionPerformed
 
     private void stopServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopServerBtnActionPerformed
-       // server.running = false;
        server.stop();
     }//GEN-LAST:event_stopServerBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea infoTxt;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel portLbl;
+    private javax.swing.JTextField portTxt;
     private javax.swing.JButton startServerBtn;
     private javax.swing.JButton stopServerBtn;
     // End of variables declaration//GEN-END:variables
