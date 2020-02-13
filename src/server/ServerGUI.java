@@ -6,7 +6,7 @@
  */
 package server;
 
-import javax.swing.SwingWorker;
+
 
 /**
  *
@@ -20,13 +20,13 @@ public class ServerGUI extends javax.swing.JFrame {
     public ServerGUI(Server server) {
         initComponents();
         this.server = server;
+        //default port
         server.port = 2000;
     }
     
+    //visar meddelanden i textarean
     public void appendInfoText(String info){
-    
         infoTxt.append(java.time.LocalTime.now() + " " + info + "\n");
-    
     
     }
     
@@ -122,13 +122,12 @@ public class ServerGUI extends javax.swing.JFrame {
 
     private void startServerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startServerBtnActionPerformed
         
+        //för att använda porten som användaren själv angivit
         if(!portTxt.getText().isEmpty()){
-        
-        
             server.port = Integer.valueOf(portTxt.getText());
-        
         }
         
+        //starta servern
         Thread thread = new Thread(server);
         thread.start();
     }//GEN-LAST:event_startServerBtnActionPerformed

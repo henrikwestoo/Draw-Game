@@ -6,7 +6,6 @@
 package client;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -31,7 +30,7 @@ public class Paper extends JPanel {
     public Paper(ClientThread clientThread) {
         this.clientThread = clientThread;
         setBackground(Color.white);
-        this.setSize(450, 400);
+        this.setSize(700, 500);
         addMouseListener(new L1());
         addMouseMotionListener(new L2());
         
@@ -53,7 +52,8 @@ public class Paper extends JPanel {
         }
 
     }
-
+    
+    //används när klienten ritar
     public void addAndSendPoint(Point p) {
         
         if(clientThread.myTurn == true){
@@ -63,16 +63,17 @@ public class Paper extends JPanel {
         }
     }
 
+    //används när klienten endast tar emot
     public void addPoint(Point p) {
         hs.add(p);
         repaint();
     }
     
+    //rensar hashmapen som innehåller alla punkter
     public void resetCanvas(){
     
         hs.clear();
         repaint();
-       
     
     }
 

@@ -14,12 +14,16 @@ import java.util.Random;
  */
 public class WordGenerator {
 
+    //ordet som klassen kommit fram till
     public String word;
+    //biblioteket med möjliga ord
     public ArrayList<String> words;
+    //lista med ord som redan använts
     public ArrayList<String> usedWords;
 
     public WordGenerator() {
 
+        //biblioteket skapas
         words = new ArrayList<>();
         words.add("boll");
         words.add("tomasz");
@@ -42,20 +46,19 @@ public class WordGenerator {
         Random r = new Random();
         String tag = "WORD-TAG$";
 
+        //hämtar ett slumpmässigt ord ur biblioteket
         word = words.get(r.nextInt(words.size()));
 
+        //kontrollerar ordet mot de ord som redan använts
         while (usedWords.contains(word)) {
 
+            //om biblioteket är lika stort som de använda orden är det dags för en ny cykel
             if (words.size() == usedWords.size()) {
                 usedWords.clear();
-                System.out.println("usedwords was emptied!!");
             }
 
             int index = r.nextInt(words.size());
             word = words.get(index);
-
-            System.out.println("Words: " + words.size() + "  Usedwords: " + usedWords.size());
-            System.out.println("new word was generated");
         }
 
         usedWords.add(word);

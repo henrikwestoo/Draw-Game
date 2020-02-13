@@ -30,6 +30,7 @@ public class ClientGUI extends javax.swing.JFrame {
 
     }
 
+    //ska visas eller inte beroende på om det är din tur
     public void hideTurnBasedElements() {
 
         sendMessageBtn.setVisible(false);
@@ -77,10 +78,10 @@ public class ClientGUI extends javax.swing.JFrame {
 
     }
     
+    //fyller meddelanderutan
     public void appendToTextArea(String alias, String message){
     
         messagesTxt.append(alias+": "+message +"\n");
-    
     
     }
 
@@ -145,7 +146,7 @@ public class ClientGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(511, Short.MAX_VALUE)
+                .addContainerGap(855, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,7 +164,7 @@ public class ClientGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(correctAnswerHintLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
                 .addComponent(turnLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(infoLbl)
@@ -185,6 +186,7 @@ public class ClientGUI extends javax.swing.JFrame {
 
         String message = messageTxt.getText();
         
+        //eftersom $ används som en tag för socket-meddelande-tolkning vill vi inte att de ska kunna komma in via user input
         if(!message.contains("$") && !message.equals("")){
         clientThread.sendGuess(message);
         messageTxt.setText("");

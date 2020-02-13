@@ -12,7 +12,7 @@ package server;
 public class Main {
     
     public static void main(String[] args) {
-    
+        
         Server server = new Server();
         ServerGUI serverGUI = new ServerGUI(server);
         serverGUI.setVisible(true);

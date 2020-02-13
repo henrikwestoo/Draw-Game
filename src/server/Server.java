@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class Server implements Runnable {
 
+    //fixa accessors
     static ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
     static int clientCount;
     static ServerGUI serverGUI;
@@ -40,11 +38,11 @@ public class Server implements Runnable {
 
         running = false;
         try {
-            //gör så att inga fler kan connecta
+            //stänger socketen för att förhindra fler anslutningsförfrågningar
             serverSocket.close();
             serverGUI.appendInfoText("Server-socket was closed");
 
-            //gör så att alla clients kopplas ned
+            //stänger socketen för varje klient
             for (ClientHandler client : clients) {
 
                 client.socket.close();
@@ -58,11 +56,12 @@ public class Server implements Runnable {
 
         } catch (IOException ex) {
 
-            System.out.println(ex.getMessage());
+            serverGUI.appendInfoText(ex.getMessage());
         }
 
     }
 
+   
     @Override
     public void run() {
 
@@ -71,6 +70,7 @@ public class Server implements Runnable {
             serverSocket = new ServerSocket(port);
             serverGUI.appendInfoText("Server started on port " +port);
 
+             //letar efter anslutningar
             while (running) {
 
                 clientSocket = serverSocket.accept();
@@ -83,6 +83,8 @@ public class Server implements Runnable {
                 String clientAlias = "Player " + clientCount;
                 serverGUI.appendInfoText("Client " + clientSocket.getLocalAddress() + " ("+clientAlias+") was added to clients");
 
+                //startar run() metoden i clientHandler så att användarens representation på servern
+                //lyssnar efter meddelanden som servern skickar ut
                 Thread thread = new Thread(clientHandler);
                 thread.start();
                 
@@ -97,16 +99,22 @@ public class Server implements Runnable {
 
     }
     
+    //genererar ett nytt ord och startar en ny tur
     public void setNewTurn(){
-        //resetar turnen
+        
         broadcastData("TURN-FALSE$");
         
-       //väljer nästa spelare och gör det till deras tur 
+       
+       
+            //här ser vi till att iterera genom klientlistan så att alla
+            //klienter får rita lika mycket
         if(currentTurnClientIndex == clients.size()){
         
+            //när vi gått igenom alla klienter återställer vi räknaren
             currentTurnClientIndex = 0;
         }
         
+        //väljer en klient och gör det till deras tur
         clients.get(currentTurnClientIndex).setTurn(true);
         currentTurnClientIndex++;
         
@@ -119,6 +127,8 @@ public class Server implements Runnable {
     
     }
 
+    //används för att skicka meddelanden till samtliga klienter
+    
     public void broadcastData(String data) {
 
         for (ClientHandler client : clients) {

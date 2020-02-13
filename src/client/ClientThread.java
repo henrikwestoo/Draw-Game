@@ -11,8 +11,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -38,14 +36,14 @@ public class ClientThread extends Thread {
 
     }
 
-    //send point
+    //skicka en punkt från paper
     public void sendPoint(Point p) {
         String pointString = "" + p.x + "," + p.y + "";
         out.println(pointString);
 
     }
 
-    //send guess
+    //skickar en gissning
     public void sendGuess(String guess) {
 
         String formattedGuess;
@@ -60,13 +58,12 @@ public class ClientThread extends Thread {
         out.println(formattedGuess);
     }
 
+    //kallar till slut på resetCanvas() på samtliga anslutna klienter
     public void sendResetMessage() {
-
         out.println("RESET$");
-
     }
 
-    //recievepoint()
+    //lyssnar efter meddelanden från servern
     @Override
     public void run() {
 
@@ -74,20 +71,19 @@ public class ClientThread extends Thread {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            //Läser in alla meddelanden som skickas
-            //GÖR OM TILL SWITCH
             while (true) {
                 String message = in.readLine();
 
+                //hämta taggen från meddelandet
                 String[] sa = message.split("\\$");
                 String tag = sa[0];
+                
                 System.out.println("TAG WAS: " + tag);
 
                 switch (tag) {
 
+                    //ett nytt rätt svar har anlänt
                     case "WORD-TAG":
-                        System.out.println("hej");
-                        System.out.println("correct answer recieved: " + message);
 
                         paper.resetCanvas();
 
@@ -97,24 +93,31 @@ public class ClientThread extends Thread {
                         System.out.println("correct answer set as: " + trimmedMessage);
                         break;
 
+                        //en användare har gissat rätt
                     case "METHOD-CALL-CORRECTANSWER":
                         gui.setInfoText("The answer was: " + currentCorrectAnswer);
                         System.out.println("a correct answer was given by a user");
                         break;
+                        
+                        //det är denna klientens tur att rita
                     case "TURN-TRUE":
                         myTurn = true;
                         gui.setTurn(true);
                         break;
 
+                        //det är inte denna klientens tur att rita
                     case "TURN-FALSE":
                         myTurn = false;
                         gui.setTurn(false);
                         break;
 
+                        //en användare har rensat sin canvas
                     case "RESET":
                         paper.resetCanvas();
                         break;
 
+                        
+                        //en användare har gissat fel eller ville skicka ett chattmeddelande
                     case "CHAT-MESSAGE":
                         String replaced = message.replace("CHAT-MESSAGE$", "");
                         String replaced2 = replaced.replace("$", "-");
@@ -125,11 +128,11 @@ public class ClientThread extends Thread {
                         gui.appendToTextArea(alias, chatMessage);
                         break;
 
+                        //en användare har ritat
                     default:
                         String[] xy = message.split(",");
                         Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
                         paper.addPoint(p);
-                        System.out.println(in.readLine());
 
                 }
 

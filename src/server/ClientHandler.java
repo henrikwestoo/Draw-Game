@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -21,6 +19,8 @@ import java.util.logging.Logger;
  */
 public class ClientHandler implements Runnable {
 
+    
+    //lägg till accessors
     DataInputStream dis;
     DataOutputStream dos;
     Socket socket;
@@ -50,6 +50,7 @@ public class ClientHandler implements Runnable {
 
     }
     
+    //gör det till denna klients tur att rita
     public void setTurn(boolean myTurn){
     
     this.myTurn = myTurn;
@@ -61,39 +62,40 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
 
+        //lyssnar efter meddelanden från klienten
         while (running) {
 
             try {
                 in = new BufferedReader(new InputStreamReader(dis));
                 //det inkomna meddelandet
                 String message = in.readLine();
-
-                // if startswith tag
-                //check if correct
-                //if correct, send specific message
-                //gör om till switch
                 
+                //här hämtar vi ut taggen för att tolka meddelandet
                 String[] sa = message.split("\\$");
                 String tag = sa[0];
                 System.out.println("TAG WAS: " + tag);
                 
                 switch(tag){
                 
+                    //ifall gissningen matchade det nuvarande ordet
                     case "GUESS-CORRECT":
                         server.broadcastData("METHOD-CALL-CORRECTANSWER$");
                         System.out.println("A CORRECT GUESS WAS MADE!!!");
                         server.setNewTurn();
                         break;
                         
+                        //ifall gissningen var fel (behandlas alltså som ett chattmeddelande på klientsidan)
                     case "GUESS-INCORRECT":
                         String formattedMessage = "CHAT-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
                         server.broadcastData(formattedMessage);
-                        System.out.println(formattedMessage +" was sentADGSGDJ");
                         System.out.println("User gave an incorrectasd guess: " + formattedMessage);
                         break;
+                        
+                        //ifall klienten vill återställa sin canvas
                     case "RESET":
                         server.broadcastData("RESET$");
                      
+                        //ifall det är en point som skickas(den enda typen av meddelande utan en tag)
                     default:
                         server.broadcastData(message);
                 }
@@ -149,6 +151,8 @@ public class ClientHandler implements Runnable {
 
     }
 
+    //skickar ett meddelande till just denna klient
+    //används i broadcastMessage() i serverklassen
     public void sendMessage(String message) {
 
         out.println(message);
