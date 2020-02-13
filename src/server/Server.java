@@ -109,8 +109,6 @@ public class Server implements Runnable {
     public void setNewTurn(){
         
         broadcastData("TURN-FALSE$");
-        
-       
        
             //här ser vi till att iterera genom klientlistan så att alla
             //klienter får rita lika mycket

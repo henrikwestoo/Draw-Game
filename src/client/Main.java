@@ -21,26 +21,8 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        //skapa socket
-        String ip = "127.0.0.1";
-        int port = 2000;
-        try {
-            Socket socket = new Socket(ip, port);
-
-            //skapa klienttråd
-            ClientThread clientThread = new ClientThread(socket);
-            
-            //skapa gui
-            Paper paper = new Paper(clientThread);
-            clientThread.paper = paper;
-            ClientGUI gui = new ClientGUI(paper, clientThread);
-            clientThread.gui = gui;
-            
-            clientThread.start();
-            
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+        StartGUI startGUI = new StartGUI();
+        startGUI.setVisible(true);
 
     }
 

@@ -5,6 +5,8 @@
  */
 package server;
 
+import client.StartGUI;
+
 /**
  *
  * @author Henrik
