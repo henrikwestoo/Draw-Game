@@ -58,6 +58,12 @@ public class Server implements Runnable {
 
             serverGUI.appendInfoText(ex.getMessage());
         }
+        
+        catch(NullPointerException e){
+        
+            serverGUI.appendInfoText("Could not close serversocket.");
+        
+        }
 
     }
 

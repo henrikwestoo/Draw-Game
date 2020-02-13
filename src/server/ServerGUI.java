@@ -19,6 +19,7 @@ public class ServerGUI extends javax.swing.JFrame {
     
     public ServerGUI(Server server) {
         initComponents();
+        setLocation(400,100);
         this.server = server;
         //default port
         server.port = 2000;

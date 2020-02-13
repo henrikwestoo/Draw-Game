@@ -30,7 +30,7 @@ public class Paper extends JPanel {
     public Paper(ClientThread clientThread) {
         this.clientThread = clientThread;
         setBackground(Color.white);
-        this.setSize(700, 500);
+        this.setSize(750, 600);
         addMouseListener(new L1());
         addMouseMotionListener(new L2());
         

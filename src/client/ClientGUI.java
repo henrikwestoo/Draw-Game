@@ -22,6 +22,7 @@ public class ClientGUI extends javax.swing.JFrame {
         setVisible(true);
         initComponents();
         this.setVisible(true);
+        setLocation(400,100);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         getContentPane().add(paper, BorderLayout.CENTER);
         this.paper = paper;
