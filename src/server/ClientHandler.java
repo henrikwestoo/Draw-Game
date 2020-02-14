@@ -62,6 +62,7 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
 
+        int counter = 0;
         //lyssnar efter meddelanden från klienten
         while (running) {
 
@@ -70,10 +71,11 @@ public class ClientHandler implements Runnable {
                 //det inkomna meddelandet
                 String message = in.readLine();
                 
+                System.out.println(counter + ":message recieved was: "+message);
+                
                 //här hämtar vi ut taggen för att tolka meddelandet
                 String[] sa = message.split("\\$");
                 String tag = sa[0];
-                System.out.println("TAG WAS: " + tag);
                 
                 switch(tag){
                 
@@ -97,6 +99,7 @@ public class ClientHandler implements Runnable {
                      
                         //ifall det är en point som skickas(den enda typen av meddelande utan en tag)
                     default:
+                        counter++;
                         server.broadcastData(message);
                 }
                 

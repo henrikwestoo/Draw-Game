@@ -70,15 +70,15 @@ public class ClientThread extends Thread {
         try {
 
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            int counter = 0;
 
             while (true) {
                 String message = in.readLine();
+                System.out.println(counter + ":message recieved was: "+message);
 
                 //hämta taggen från meddelandet
                 String[] sa = message.split("\\$");
                 String tag = sa[0];
-                
-                System.out.println("TAG WAS: " + tag);
 
                 switch (tag) {
 
@@ -130,6 +130,7 @@ public class ClientThread extends Thread {
 
                         //en användare har ritat
                     default:
+                        counter++;
                         String[] xy = message.split(",");
                         Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
                         paper.addPoint(p);

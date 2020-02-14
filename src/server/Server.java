@@ -140,7 +140,6 @@ public class Server implements Runnable {
             client.sendMessage(data);
 
         }
-        System.out.println("broadcasted: " + data);
 
     }
 
