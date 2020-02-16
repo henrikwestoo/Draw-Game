@@ -21,19 +21,20 @@ public class ClientHandler implements Runnable {
 
     
     //lägg till accessors
-    DataInputStream dis;
-    DataOutputStream dos;
-    Socket socket;
-    BufferedReader in;
-    PrintWriter out;
-    String ip;
-    boolean running = true;
-    boolean myTurn;
-    String alias;
-    Server server;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    public Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
+    private String ip;
+    private boolean running;
+    private boolean myTurn;
+    private String alias;
+    private Server server;
 
     public ClientHandler(Socket socket, int alias, Server server) {
 
+        running = true;
         this.socket = socket;
         this.alias = "Player " + alias;
         this.server = server;
@@ -102,50 +103,10 @@ public class ClientHandler implements Runnable {
                         counter++;
                         server.broadcastData(message);
                 }
-                
-                
-                
-                
-                
-                
-//                if (message.startsWith("GUESS")) {
-//
-//                    System.out.println("guess detected");
-//
-//                    if (message.startsWith("GUESS-CORRECT$")) {
-//
-//                        //broadcast infomessage
-//                        server.broadcastData("METHOD-CALL-CORRECTANSWER$");
-//                        System.out.println("A CORRECT GUESS WAS MADE!!!");
-//                        server.setNewTurn();
-//
-//                    } else if (message.startsWith("GUESS-INCORRECT$")) {
-//
-//                        //append to chat
-//                        String formattedMessage = "CHAT-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
-//                        server.broadcastData(formattedMessage);
-//                        System.out.println(formattedMessage +" was sentADGSGDJ");
-//                        System.out.println("User gave an incorrectasd guess: " + formattedMessage);
-//
-//                    }
-//
-//                }
-//                
-//                else if(message.startsWith("RESET$")){
-//                
-//                    server.broadcastData("RESET$");
-//                
-//                }
-//                
-//                //det var en point som skickades
-//                else {
-//                    server.broadcastData(message);
-//                }
             } catch (IOException ex) {
 
                 running = false;
                 server.serverGUI.appendInfoText(alias +" "+socket.getLocalAddress()+" disconnected");
-                server.setNewTurn();
                 server.clients.remove(this);
                 
             }

@@ -24,8 +24,8 @@ public class Paper extends JPanel {
     public HashSet hs = new HashSet();
     ClientThread clientThread;
     
-    int brushSizeX;
-    int brushSizeY;
+    private int brushSizeX;
+    private int brushSizeY;
 
     public Paper(ClientThread clientThread) {
         this.clientThread = clientThread;

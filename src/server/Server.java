@@ -15,17 +15,15 @@ import java.util.ArrayList;
  * @author Henrik
  */
 public class Server implements Runnable {
-
-    //fixa accessors
-    static ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
-    static int clientCount;
-    static ServerGUI serverGUI;
-    int port;
-    boolean running = true;
-    ServerSocket serverSocket;
-    Socket clientSocket;
-    WordGenerator wg;
-    int currentTurnClientIndex;
+    public static ArrayList<ClientHandler> clients = new ArrayList<ClientHandler>();
+    private static int clientCount;
+    public static ServerGUI serverGUI;
+    public int port;
+    private boolean running = true;
+    private ServerSocket serverSocket;
+    private Socket clientSocket;
+    private WordGenerator wg;
+    private int currentTurnClientIndex;
     
     public Server(){
     
@@ -41,6 +39,8 @@ public class Server implements Runnable {
             //stänger socketen för att förhindra fler anslutningsförfrågningar
             serverSocket.close();
             serverGUI.appendInfoText("Server-socket was closed");
+            
+             broadcastData("SERVER-STOPPED$");
 
             //stänger socketen för varje klient
             for (ClientHandler client : clients) {
@@ -49,8 +49,10 @@ public class Server implements Runnable {
                 clients.remove(client);
 
             }
+           
             
             clientCount = 0;
+            currentTurnClientIndex = 0;
             
             serverGUI.appendInfoText("Client sockets were closed");
 

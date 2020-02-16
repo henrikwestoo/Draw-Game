@@ -18,12 +18,12 @@ import java.io.InputStreamReader;
  */
 public class ClientThread extends Thread {
 
-    Socket socket;
-    Paper paper;
-    String currentCorrectAnswer;
-    boolean myTurn;
-    ClientGUI gui;
-    PrintWriter out;
+    private Socket socket;
+    public Paper paper;
+    private String currentCorrectAnswer;
+    public boolean myTurn;
+    public ClientGUI gui;
+    private PrintWriter out;
 
     public ClientThread(Socket socket) {
 
@@ -127,6 +127,10 @@ public class ClientThread extends Thread {
                         String chatMessage = msg[1];
                         gui.appendToTextArea(alias, chatMessage);
                         break;
+                        
+                    case "SERVER-STOPPED":
+                        System.exit(0);
+                        
 
                         //en användare har ritat
                     default:

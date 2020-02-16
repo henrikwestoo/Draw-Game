@@ -14,7 +14,7 @@ package server;
  */
 public class ServerGUI extends javax.swing.JFrame {
 
-    Server server;
+    private Server server;
     
     
     public ServerGUI(Server server) {
