@@ -7,8 +7,6 @@ package client;
 
 import java.io.IOException;
 import java.net.Socket;
-import server.Server;
-import server.ServerGUI;
 
 /**
  *
@@ -126,8 +124,6 @@ public class StartGUI extends javax.swing.JFrame {
 
             //skapa klienttråd
             ClientThread clientThread = new ClientThread(socket);
-
-            System.out.println(ip + " : "+ port);
             
             //skapa gui
             Paper paper = new Paper(clientThread);

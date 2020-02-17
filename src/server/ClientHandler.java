@@ -72,8 +72,6 @@ public class ClientHandler implements Runnable {
                 //det inkomna meddelandet
                 String message = in.readLine();
                 
-                System.out.println(counter + ":message recieved was: "+message);
-                
                 //här hämtar vi ut taggen för att tolka meddelandet
                 String[] sa = message.split("\\$");
                 String tag = sa[0];
@@ -83,7 +81,6 @@ public class ClientHandler implements Runnable {
                     //ifall gissningen matchade det nuvarande ordet
                     case "GUESS-CORRECT":
                         server.broadcastData("METHOD-CALL-CORRECTANSWER$");
-                        System.out.println("A CORRECT GUESS WAS MADE!!!");
                         server.setNewTurn();
                         break;
                         
@@ -91,7 +88,6 @@ public class ClientHandler implements Runnable {
                     case "GUESS-INCORRECT":
                         String formattedMessage = "CHAT-MESSAGE$"+alias+"$"+message.substring(message.lastIndexOf("$") + 1);
                         server.broadcastData(formattedMessage);
-                        System.out.println("User gave an incorrectasd guess: " + formattedMessage);
                         break;
                         
                         //ifall klienten vill återställa sin canvas
@@ -105,6 +101,11 @@ public class ClientHandler implements Runnable {
                 }
             } catch (IOException ex) {
 
+                if(this.myTurn = true){
+                
+                    server.setNewTurn();
+                
+                }
                 running = false;
                 server.serverGUI.appendInfoText(alias +" "+socket.getLocalAddress()+" disconnected");
                 server.clients.remove(this);

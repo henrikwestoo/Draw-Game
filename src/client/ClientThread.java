@@ -74,7 +74,7 @@ public class ClientThread extends Thread {
 
             while (true) {
                 String message = in.readLine();
-                System.out.println(counter + ":message recieved was: "+message);
+                System.out.println(counter + ":message recieved was: " + message);
 
                 //hämta taggen från meddelandet
                 String[] sa = message.split("\\$");
@@ -93,31 +93,30 @@ public class ClientThread extends Thread {
                         System.out.println("correct answer set as: " + trimmedMessage);
                         break;
 
-                        //en användare har gissat rätt
+                    //en användare har gissat rätt
                     case "METHOD-CALL-CORRECTANSWER":
                         gui.setInfoText("The answer was: " + currentCorrectAnswer);
                         System.out.println("a correct answer was given by a user");
                         break;
-                        
-                        //det är denna klientens tur att rita
+
+                    //det är denna klientens tur att rita
                     case "TURN-TRUE":
                         myTurn = true;
                         gui.setTurn(true);
                         break;
 
-                        //det är inte denna klientens tur att rita
+                    //det är inte denna klientens tur att rita
                     case "TURN-FALSE":
                         myTurn = false;
                         gui.setTurn(false);
                         break;
 
-                        //en användare har rensat sin canvas
+                    //en användare har rensat sin canvas
                     case "RESET":
                         paper.resetCanvas();
                         break;
 
-                        
-                        //en användare har gissat fel eller ville skicka ett chattmeddelande
+                    //en användare har gissat fel eller ville skicka ett chattmeddelande
                     case "CHAT-MESSAGE":
                         String replaced = message.replace("CHAT-MESSAGE$", "");
                         String replaced2 = replaced.replace("$", "-");
@@ -127,12 +126,11 @@ public class ClientThread extends Thread {
                         String chatMessage = msg[1];
                         gui.appendToTextArea(alias, chatMessage);
                         break;
-                        
+
                     case "SERVER-STOPPED":
                         System.exit(0);
-                        
 
-                        //en användare har ritat
+                    //en användare har ritat
                     default:
                         counter++;
                         String[] xy = message.split(",");
@@ -141,52 +139,6 @@ public class ClientThread extends Thread {
 
                 }
 
-//                if (message.startsWith("WORD-TAG")) {
-//
-//                    System.out.println("correct answer recieved: " + message);
-//
-//                    paper.resetCanvas();
-//
-//                    String trimmedMessage = message.substring(message.lastIndexOf("$") + 1);
-//                    currentCorrectAnswer = trimmedMessage;
-//                    gui.setAnswer(trimmedMessage);
-//                    System.out.println("correct answer set as: " + trimmedMessage);
-//
-//                } else if (message.equals("METHOD$-CALL$-CORRECTANSWER$")) {
-//
-//                    gui.setInfoText("The answer was: " + currentCorrectAnswer);
-//                    System.out.println("a correct answer was given by a user");
-//
-//                } else if (message.equals("TURN$-TRUE$")) {
-//
-//                    myTurn = true;
-//                    gui.setTurn(true);
-//                } else if (message.equals("TURN$-FALSE$")) {
-//
-//                    myTurn = false;
-//                    gui.setTurn(false);
-//                    //
-//                } else if (message.equals("RESET$")) {
-//
-//                    paper.resetCanvas();
-//
-//                } else if (message.startsWith("CHAT$-MESSAGE$")) {
-//                    String replaced = message.replace("CHAT$-MESSAGE$", "");
-//                    String replaced2 = replaced.replace("$", "-");
-//                    String[] msg = replaced2.split("-");
-//
-//                    String alias = msg[0];
-//                    String chatMessage = msg[1];
-//                    gui.appendToTextArea(alias, chatMessage);
-//
-//                } else {
-//
-//                    String[] xy = message.split(",");
-//                    Point p = new Point(Integer.parseInt(xy[0]), Integer.parseInt(xy[1]));
-//                    paper.addPoint(p);
-//                    System.out.println(in.readLine());
-//
-//                }
             }
 
         } catch (IOException | NumberFormatException ex) {

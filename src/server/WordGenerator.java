@@ -25,13 +25,13 @@ public class WordGenerator {
 
         //biblioteket skapas
         words = new ArrayList<>();
-        words.add("boll");
-        words.add("lejon");
+        words.add("fotboll");
+        words.add("hus");
         words.add("tiger");
-        words.add("cecilia");
-        words.add("lovisa");
-        words.add("bengt");
-        words.add("zebra");
+        words.add("båt");
+        words.add("big ben");
+        words.add("samtal");
+        words.add("kärlek");
         words.add("haj");
 
         usedWords = new ArrayList<>();
